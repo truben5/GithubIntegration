@@ -1,0 +1,38 @@
+spring:
+  ssl:
+    bundle:
+      jks:
+        local-bundle:
+          keystore:
+            location: classpath:localhost.p12
+            password: changeit
+            type: PKCS12
+          key:
+            alias: localhost
+
+server:
+  ssl:
+    enabled-protocols:
+      - TLSv1.3
+      - TLSv1.2
+    bundle: local-bundle
+  http2:
+    enabled: true
+  port: 8443
+logging:
+  level:
+    com:
+      troy:
+        githubintegration: DEBUG
+
+app:
+  github:
+    api-url: https://api.github.com
+    connect-timeout: 5s
+    # Optional personal access token, read from the environment so it is never committed
+    token: ${GITHUB_TOKEN:}
+    cache:
+      size: 10
+      ttl: 15m
+
+
